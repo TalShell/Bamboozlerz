@@ -18,7 +18,7 @@ def handlein(filein, fileout):
         libbooks = list(map(lambda x: books[int(x)], lines[i +1].split(' ')))
         libs.append(Library(lib_id, signup, ship, libbooks))
         lib_id = lib_id + 1
-    process(books, libs)
+    process(books, libs, days)
 
 if __name__ == "__main__":
     import argparse

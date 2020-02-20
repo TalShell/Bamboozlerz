@@ -5,4 +5,5 @@ class Library:
         self.ship = ship
         self.unique_books = books
         self.score = 0
+        self.sinupDate=0
         self.is_open = True
