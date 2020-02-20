@@ -19,6 +19,15 @@ def handlein(filein, fileout):
         libs.append(Library(lib_id, signup, ship, libbooks))
         lib_id = lib_id + 1
     process(books, libs)
+    generate_output(fileout, libs)
+
+def generate_output(fileout, outlibs):
+    fileout.write(str(len(outlibs)))
+    fileout.write("\n")
+    for lib in outlibs:
+        fileout.write("{} {}\n".format(lib.id, len(lib.unique_books)))
+        fileout.write(' '.join(map(lambda x: str(x.id), lib.unique_books))+ "\n") 
+        
 
 if __name__ == "__main__":
     import argparse
