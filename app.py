@@ -2,8 +2,9 @@
 
 from library import Library
 from book import Book
+from process import process
 
-def process(filein, fileout):
+def handlein(filein, fileout):
     lines = filein.readlines()
     nb_books, nb_libs, days = map(int,lines[0].split(' '))
     books = {}
@@ -17,6 +18,7 @@ def process(filein, fileout):
         libbooks = list(map(lambda x: books[int(x)], lines[i +1].split(' ')))
         libs.append(Library(lib_id, signup, ship, libbooks))
         lib_id = lib_id + 1
+    process(books, libs)
 
 if __name__ == "__main__":
     import argparse
@@ -30,4 +32,4 @@ if __name__ == "__main__":
     for filein in options.input:
         out = os.path.join("out", os.path.basename(filein.name))
         with open(out, "w") as fileout:
-            process(filein, fileout) 
+            handlein(filein, fileout) 
