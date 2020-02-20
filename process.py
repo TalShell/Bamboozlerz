@@ -38,7 +38,7 @@ def process(books, libs, days,explored_libs):
 
     print("Sorting done")
     #Naive approach
-    for d in range(fucking_days):
+    for d in fucking_days:
         for l in libs:
             checklib(l,explored_libs,d,allBooks)
                     
