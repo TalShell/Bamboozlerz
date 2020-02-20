@@ -20,12 +20,29 @@ def process(books, libs, days,explored_libs):
     startDate=0;
     print(days)
     allBooks = set()
+    mainBooks=set()
+    
     #Assign to each library a score 
     for l in libs:
         for bk in l.unique_books:
             l.score = l.score + bk.score
+            mainBooks.add(bk)
         l.unique_books.sort(key=lambda x: x.score, reverse=True)
     
+
+    for bk in mainBooks:
+        deleted =False
+        for l in libs:
+            if deleted:
+                for bb in l.unique_books:
+                    if bk.id == bb.id:
+                        l.unique_books.remove(bb)
+                        break
+            for b in l.unique_books:
+                if bk.id == b.id:
+                    deleted =True
+                    break
+            
     libs.sort(key=lambda x: (x.score/x.signup_days), reverse=True)
     
     fucking_days = []
