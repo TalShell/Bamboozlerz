@@ -7,12 +7,13 @@ from multiprocessing import Pool
 def checklib(l,explored_libs,d):
     if l.sinupDate <d:
         ship=0
-        while ship < l.ship:
-            for bk in l.unique_books:
-                if not bk.is_scanned:
-                    bk.is_scanned=True
-                    explored_libs.append(l)
-                    ship+=1
+        for bk in l.unique_books:
+            if ship >= l.ship:
+                break
+            if not bk.is_scanned:
+                bk.is_scanned=True
+                explored_libs.add(l)
+                ship+=1
                 
 def process(books, libs, days,explored_libs):
     startDate=0;
