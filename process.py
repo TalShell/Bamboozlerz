@@ -12,7 +12,10 @@ def process(books, libs, days):
     for l in libs:
         startDate += l.signup_days
         l.sinupDate = startDate
-    
+        for bk in l.unique_books:
+            l.score = l.score + bk.score
+            
+    libs.sort(key=lambda x: x.score, reverse=False)
     #Naive approach
     for d in range(days):
         for l in libs:
