@@ -2,6 +2,7 @@
 
 from library import Library
 from book import Book
+from multiprocessing import Pool
 
 def checklib(l,explored_libs,d):
     if l.sinupDate <d:
@@ -19,7 +20,8 @@ def process(books, libs, days):
     for l in libs:
         for bk in l.unique_books:
             l.score = l.score + bk.score
-            
+        l.unique_books.sort(key=lambda x: x.score, reverse=False)
+    
     libs.sort(key=lambda x: x.score, reverse=False)
     
     #Assign to each library a starting date
@@ -35,8 +37,4 @@ def process(books, libs, days):
         for l in libs:
             checklib(l,explored_libs,d)
                     
-    for l in libs:
-        for bk in l.unique_books:
-            if bk.is_scanned:
-                print(l.id,bk.id)
                 
