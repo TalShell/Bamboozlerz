@@ -12,7 +12,7 @@ def process(books, libs, days):
     
     for d in range(days):
         for l in libs:
-            for bk in libs.unique_books:
+            for bk in l.unique_books:
                 if not bk.is_scanned:
                     bk.is_scanned=True
                     explored_libs.append(l)
