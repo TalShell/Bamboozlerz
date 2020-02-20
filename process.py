@@ -12,6 +12,7 @@ def checklib(l,explored_libs,d,allBooks):
                 break
             if not bk in allBooks :
                 bk.is_scanned=True
+                l.score -=bk.score
                 explored_libs.add(l)
                 ship+=1
                 
@@ -23,9 +24,9 @@ def process(books, libs, days,explored_libs):
     for l in libs:
         for bk in l.unique_books:
             l.score = l.score + bk.score
-        l.unique_books.sort(key=lambda x: x.score, reverse=False)
+        l.unique_books.sort(key=lambda x: x.score, reverse=True)
     
-    libs.sort(key=lambda x: x.ship, reverse=False)
+    libs.sort(key=lambda x: x.score, reverse=False)
     
     fucking_days = []
     #Assign to each library a starting date
@@ -41,5 +42,7 @@ def process(books, libs, days,explored_libs):
     for d in fucking_days:
         for l in libs:
             checklib(l,explored_libs,d,allBooks)
+        libs.sort(key=lambda x: x.score, reverse=False)
+
                     
                 
