@@ -26,7 +26,7 @@ def process(books, libs, days,explored_libs):
             l.score = l.score + bk.score
         l.unique_books.sort(key=lambda x: x.score, reverse=True)
     
-    libs.sort(key=lambda x: x.score, reverse=False)
+    libs.sort(key=lambda x: (x.score/x.signup_days), reverse=True)
     
     fucking_days = []
     #Assign to each library a starting date
@@ -42,7 +42,7 @@ def process(books, libs, days,explored_libs):
     for d in fucking_days:
         for l in libs:
             checklib(l,explored_libs,d,allBooks)
-        libs.sort(key=lambda x: x.score, reverse=False)
+        libs.sort(key=lambda x: (x.score/x.signup_days), reverse=True)
 
                     
                 
