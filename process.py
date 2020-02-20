@@ -5,7 +5,7 @@ from book import Book
 from multiprocessing import Pool
 
 def checklib(l,explored_libs,d):
-    if l.sinupDate <d:
+    if l.sinupDate >=d:
         ship=0
         for bk in l.unique_books:
             if ship >= l.ship:
@@ -25,7 +25,7 @@ def process(books, libs, days,explored_libs):
             l.score = l.score + bk.score
         l.unique_books.sort(key=lambda x: x.score, reverse=False)
     
-    libs.sort(key=lambda x: x.score, reverse=False)
+    #libs.sort(key=lambda x: x.score, reverse=False)
     
     #Assign to each library a starting date
     for l in libs:
