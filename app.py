@@ -22,6 +22,16 @@ def handlein(filein, fileout):
 
     process(books, libs, days,explored_libs)
     generate_output(fileout, explored_libs)
+    
+    score = 0
+    for l in explored_libs :
+        for bk in l.unique_books:
+            if bk.is_scanned:
+                score +=bk.score
+    
+    print("score: ",score)
+            
+        
 
 def generate_output(fileout, outlibs):
     fileout.write(str(len(outlibs)))

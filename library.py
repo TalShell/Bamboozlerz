@@ -7,3 +7,4 @@ class Library:
         self.score = 0
         self.sinupDate=0
         self.is_open = True
+        self.nbbooks=0

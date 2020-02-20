@@ -3,3 +3,4 @@ class Book:
         self.id = id
         self.score = score
         self.is_scanned = False
+        self.ispresent=False
