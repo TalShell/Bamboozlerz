@@ -18,8 +18,10 @@ def handlein(filein, fileout):
         libbooks = list(map(lambda x: books[int(x)], lines[i +1].split(' ')))
         libs.append(Library(lib_id, signup, ship, libbooks))
         lib_id = lib_id + 1
-    process(books, libs, days)
-    generate_output(fileout, libs)
+    explored_libs=[]
+
+    process(books, libs, days,explored_libs)
+    generate_output(fileout, explored_libs)
 
 def generate_output(fileout, outlibs):
     fileout.write(str(len(outlibs)))
