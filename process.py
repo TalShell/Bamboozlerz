@@ -6,19 +6,21 @@ from book import Book
 def process(books, libs, days):
     explored_libs=[]
     startDate=0;
+    print(days)
     for l in libs:
         startDate += l.signup_days
         l.sinupDate = startDate
     
     for d in range(days):
         for l in libs:
-            for bk in l.unique_books:
-                if not bk.is_scanned:
-                    bk.is_scanned=True
-                    explored_libs.append(l)
+            if l.sinupDate <d:
+                for bk in l.unique_books:
+                    if not bk.is_scanned:
+                        bk.is_scanned=True
+                        explored_libs.append(l)
                     
     for l in libs:
-        for bk in libs.unique_books:
+        for bk in l.unique_books:
             if bk.is_scanned:
-                print(l,bk)
+                print(l.id,bk.id)
     
