@@ -7,3 +7,6 @@ class Library:
         self.score = 0
         self.sinupDate=0
         self.is_open = True
+        self.scanned_book=0
+        self.booktokeep = []
+        self.max_score=0

@@ -3,47 +3,44 @@
 from library import Library
 from book import Book
 from multiprocessing import Pool
+import random,math
 
-def checklib(l,explored_libs,d,allBooks):
-    if l.sinupDate >d:
+def checklib(l,explored_libs,d,allBooks,explored_book):
+    if l.sinupDate >=d:
         ship=0
         for bk in l.unique_books:
             if ship >= l.ship:
                 break
-            if not bk in allBooks :
+            if not bk.id in allBooks:
+                l.score -=bk.score
                 bk.is_scanned=True
                 l.score -=bk.score
+                allBooks.add(bk.id)
+                l.scanned_book +=1
+                l.booktokeep.append(bk.id)
                 explored_libs.add(l)
+                explored_book.add(bk.id)
                 ship+=1
+
                 
-def process(books, libs, days,explored_libs):
+def process(books, libs, days,explored_libs,explored_book):
     startDate=0;
     print(days)
     allBooks = set()
-    mainBooks=set()
+    mainBooks = set()
     
     #Assign to each library a score 
     for l in libs:
         for bk in l.unique_books:
-            l.score = l.score + bk.score
-            mainBooks.add(bk)
+            if bk.id not in mainBooks:
+                mainBooks.add(bk.id)
+                l.score = l.score + bk.score
         l.unique_books.sort(key=lambda x: x.score, reverse=True)
-    
-
-    for bk in mainBooks:
-        deleted =False
-        for l in libs:
-            if deleted:
-                for bb in l.unique_books:
-                    if bk.id == bb.id:
-                        l.unique_books.remove(bb)
-                        break
-            for b in l.unique_books:
-                if bk.id == b.id:
-                    deleted =True
-                    break
+        l.max_score=l.unique_books[0].score
+        #print(l.max_score)
             
-    libs.sort(key=lambda x: (x.score/x.signup_days), reverse=True)
+    #libs.sort(key=lambda x: math.sqrt(x.score), reverse=False)
+    random.shuffle(libs)
     
     fucking_days = []
     #Assign to each library a starting date
@@ -56,10 +53,15 @@ def process(books, libs, days,explored_libs):
 
     print("Sorting done")
     #Naive approach
-    for d in fucking_days:
-        for l in libs:
-            checklib(l,explored_libs,d,allBooks)
-        libs.sort(key=lambda x: (x.score/x.signup_days), reverse=True)
+    print('MaxDay:',days)
 
-                    
-                
+    for d in range(days):
+        #print('Day:',d)
+        for l in libs:
+            checklib(l,explored_libs,d,allBooks,explored_book)
+        if len(mainBooks) == len(allBooks):
+            print('Stop as all books were scanned')
+            break
+        #libs.sort(key=lambda x: (x.score)/(len(x.booktokeep)+1), reverse=True)
+        libs.sort(key=lambda x: len(x.booktokeep)-len(x.unique_books), reverse=False)
+
